@@ -1,0 +1,27 @@
+CLI-Rpg
+
+1) Player is welcomed with...
+	a) Message
+	b) Number of players
+
+2) Player is asked to battle against...
+	a) Bots only
+	b) Players and bots
+
+3) Each turn in a battle, the player is asked to...
+	a) Attack an enemy
+		A) Decide weapon
+		B) Decide enemy
+		C) Deal damage to enemy
+	b) Run
+		A) Player has to confirm
+		B) If player has enough health, they can run away
+		C) Otherwise they take damage
+			Note) The more health they have, the harder they fall
+
+
+Weapons:
+- Sword
+	Dmg)
+
+
