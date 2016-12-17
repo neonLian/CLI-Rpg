@@ -1,5 +1,6 @@
 class Weapon():
-	def __init__(self, dmg, mana=0, effects=[]):
+	def __init__(self, player, name, dmg, mana=0, effects=[]):
+		self.name = name
 		self.damage = dmg
 		self.mana_cost = mana
 		self.effects = effects
@@ -16,20 +17,20 @@ class Weapon():
 		self.special(player)
 
 class Sword(Weapon):
-	def __init__(self):
-		super().__init__(dmg=25)
+	def __init__(self, player):
+		Weapon.__init__(self, player, "Sword", dmg=25)
 
 class Fireball(Weapon):
-	def __init__(self):
-		super().__init__(dmg=40, mana=40, effects=["burning"])
+	def __init__(self, player):
+		Weapon.__init__(self, player, "Fireball", dmg=100, mana=40, effects=["burning"])
 
 class Heal(Weapon):
 	def __init__(self):
-		super().__init__(dmg=-30, mana=30)
+		Weapon.__init__("Heal", dmg=-30, mana=30)
 
 class RegenMana(Weapon):
 	def __init__(self):
-		super().__init__(dmg=0)
+		Weapon.__init__("Mana", dmg=0)
 	
 	def special(self, player):
 		player.mana += 50

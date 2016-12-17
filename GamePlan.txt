@@ -25,10 +25,10 @@ Weapons:
 - Fireball
 	- Burns
 - Heal
-- Shield
 - Bow
 - Stun
 - Rocket Launcher
+- Regen Mana
 
 
 
