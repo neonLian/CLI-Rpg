@@ -40,8 +40,8 @@ class Battle:
 				break
 		target = target_player.name
 		if target_player in self.players and ((target == player.name) == weapon.buff):
-			print(player.name + " attacked " + target + " with " + weapon.name + " and dealt " + str(weapon.damage) + " damage.")
-			target_player.HP -= weapon.damage
+			print(player.name + " attacked " + target + " with " + weapon.name)
+			weapon.attack(target_player)
 		else:
 			print("Invalid player.")
 	

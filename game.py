@@ -5,7 +5,10 @@ bob = Player("Bob")
 billy = Player("Billy")
 crsn = Player("C.rs.n")
 players = [bob, billy, crsn]
+weapons = [Sword, Fireball, Heal, RegenMana]
 for p in players:
-	p.add_weapon(Sword(p))
-	p.add_weapon(Fireball(p))
+	for w in weapons:
+		p.add_weapon(w(p))
+for l in range(100):
+	bob.level_up()
 Battle(players)
