@@ -1,9 +1,12 @@
 import random as r
 class Player():
-	def __init__(self, name="Player"):
+	def __init__(self, conn, cause, money, name="Player"):
 		self.HP = 400
-		#name = player till the player gives its name
 		self.name = name
+		self.conn = conn
+		self.cause = cause
+		self.currency = money
+		self.money = 0
 		self.mana = 50
 		self.weapons = {}
 		self.level = 1
