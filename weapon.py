@@ -40,3 +40,20 @@ class RegenMana(Weapon):
 	
 	def special(self, player):
 		player.mana += 50
+class battle_staff(Weapon):
+	def __init__(self):
+		Weapon.__init__(self,player,"Battle Staff",dmg=40 mana=10, effects=["burning"])
+class axe(Weapon):
+	def __init__(self):
+		Weapon.__init__(self,player,"Wood cuters axe",dmg=20)
+class club(Weapon):
+	def __init__(self):
+		Weapon.__init__(self,player,"Club",dmg=30)
+class spear(Weapon):
+	def __init__(self):
+		Weapon.__init__(self,player,"Spear",dmg=40)
+# i was thinking you could load the bow with arows that have efects thats why the dmg is so low
+class Bow(Weapon):
+	def __init__(self):
+		Weapon.__init__(self,player,"Bow",dmg=10)
+
