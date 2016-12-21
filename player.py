@@ -26,5 +26,4 @@ class Player():
 
 	def __str__(self):
 		return "%s [Lvl %d], HP: %d, Mana: %d" % (self.name, self.level, self.HP, self.mana)
-#saveTheChickens
 	
