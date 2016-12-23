@@ -42,7 +42,7 @@ class RegenMana(Weapon):
 		player.mana += 50
 class battle_staff(Weapon):
 	def __init__(self):
-		Weapon.__init__(self,player,"Battle Staff",dmg=40 mana=10, effects=["burning"])
+		Weapon.__init__(self,player,"Battle Staff",dmg=40, mana=10, effects=["burning"])
 class axe(Weapon):
 	def __init__(self):
 		Weapon.__init__(self,player,"Wood cuters axe",dmg=20)

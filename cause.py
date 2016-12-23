@@ -8,7 +8,3 @@ class Cause():
 		self.Money = M
 C = Cause(random.choice(Clist),random.choice(Money))
 		
-Test = C.cause
-Money_type = C.Money
-print(Test)
-print(Money_type)
