@@ -24,6 +24,7 @@ s.listen(42)
 print("Server now listening")
 
 player_list = {}
+players_in_battle = []
 battle = False
 battle_start = None
 time_left = 10
@@ -42,9 +43,8 @@ def new_player(c):
 		player.add_weapon(r.choice(weapon_list)(player))
 		player.add_weapon(Manapua(player))
 		player.add_weapon(EdibleRainbow(player))
-		if player.name == "Xetrov":
-			for i in range(100):
-				player.level_up()
+		for i in range(100):
+			player.level_up()
 		last_players = dict(player_list)
 		while True:
 			if not player_list == last_players:
@@ -68,22 +68,21 @@ def matchmaking():
 	global time_left
 	while True:
 		if battle_start is not None:
-			print(battle_start)
-			print(battle_start - time.time())
-			print(time_left)
 			if time.time() >= battle_start:
 				battle_start = None
 				battle = True
 				Thread(target=Battle, args=(list(player_list.values()),)).start()
-				battle = False
+				for player in player_list:
+					players_in_battle.append(player_list.pop(player))
 			else:
 				time.sleep(1)
 				for player in player_list.values():
 					u.s2c(player.conn, "Battle starting in %d seconds!" % time_left)
 				time_left -= 1
-		elif len(player_list) >= 1 and battle == False:
+		elif len(player_list) >= 3 and battle == False:
 			battle_start = time.time() + 10
 			time_left = 10
+
 Thread(target=matchmaking).start()
 while True:
 	conn, address = s.accept()
