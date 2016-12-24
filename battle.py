@@ -1,3 +1,5 @@
+import util as u
+
 class Battle:
 	""" Usage: Battle([player1, player2]) """
 	def __init__(self, players):
@@ -9,47 +11,49 @@ class Battle:
 		print("Game Over! %s has won!" % self.players[0].name)
 	
 	def inform(self):
-		print("Player information:")
+		self.bc("Player information:")
 		for player in self.players:
-			print(player)
+			self.bc(str(player))
 	
-	def menu_option(self, options):
-		for i, option in enumerate(options):
-			print("%d. %s" % (i, option))
-		print("Type in a number or option: ")
-		choice = input()
-		try:
-			choice = options[int(choice)]
-		except:
-			pass
-		return choice
+	def bc(self, msg): # broadcast
+		for player in self.players:
+			u.s2c(player.conn, msg) 
 	
 	def attack(self, player):
-		print("\nWhat weapon would you like to use? ")
-		weapon = self.menu_option(player.weapons)
+		u.s2c(player.conn, "\nWhat weapon would you like to use? ")
+		wpn_list = dict(player.weapons)
+		for wep in wpn_list:
+			new_name = wep + " (" + str(wpn_list[wep].mana_cost) + " mana)"
+			wpn_list[new_name] = wpn_list.pop(wep) 
+		weapon = u.menu_option(wpn_list, player.conn)
 		try:
 			weapon = int(weapon)
-			weapon = list(player.weapons.values())[weapon]
+			weapon = list(wpn_list.values())[weapon]
 		except ValueError:
-			weapon = player.weapons[weapon]
-		print(player.name + ", who would you like to attack?")
-		target = self.menu_option(self.players)
-		for p in self.players:
-			if p == target:
-				target_player = p
-				break
+			weapon = wpn_list[weapon]
+		if weapon.buff:
+			target = player
+		else:
+			u.s2c(player.conn, player.name + ", who would you like to attack?")
+			targets = list(self.players)
+			for i, t in enumerate(targets):
+				if player.name == t.name:
+					targets.pop(i)
+			target = u.menu_option(self.players, player.conn)
+		target_player = target
 		target = target_player.name
 		if target_player in self.players and ((target == player.name) == weapon.buff):
-			print(player.name + " attacked " + target + " with " + weapon.name)
+			self.bc(player.name + " attacked " + target + " with " + weapon.name)
 			weapon.attack(target_player)
 		else:
-			print("Invalid player.")
+			u.s2c(player.conn, "Invalid player.")
 	
 	def turn(self, player):
-		print("\n-- %s's Turn --" % player.name)
+		self.bc("\n-- %s's Turn --" % player.name)
 		player.do_effects()
-		self.inform()
-		self.attack(player)
+		if player.HP > 0:
+			self.inform()
+			self.attack(player)
 	
 	def start(self):
 		player_index = 0
@@ -58,9 +62,13 @@ class Battle:
 			self.turn(next_p)
 			for i, p in enumerate(self.players):
 				if p.HP <= 0:
-					print(p.name + " has died.")
-					del self.players[i]
+					self.bc(p.name + " has died.")
+					self.players.pop(i)
 			player_index += 1
 			if player_index > len(self.players) - 1:
 				player_index = 0
+		winner = self.players[0]
+		u.s2c(winner.conn, "You have won the match!")
+		
+
 

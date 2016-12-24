@@ -1,4 +1,5 @@
 import random as r
+import util as u
 class Player():
 	def __init__(self, conn, cause, money, name="Player"):
 		self.HP = 400
@@ -12,20 +13,25 @@ class Player():
 		self.level = 1
 		self.multiplier = 1.0
 		self.effects = []
+		self.xp = 0
 
 	def do_effects(self):
 		self.mana += 5
 		# Burning
 		if "burning" in self.effects:
-			print(self.name + " has taken burn damage.\n")
+			u.s2c(self.conn, "You have taken burn damage.\n")
 			self.HP -= r.randint(5, 10)
+		if "bleeding" in self.effects:
+			u.s2c(self.conn, "You have taken bleed damage.\n")
+			self.HP -= r.randint(15, 30)
+
 	def add_weapon(self, weapon):
 		self.weapons[weapon.name] = weapon
 	
 	def level_up(self):
 		self.level += 1
 		self.multiplier = 1 + ((self.level-1) / 10)
-		self.HP *= self.multiplier
+		self.HP = 400 * self.multiplier
 
 	def __str__(self):
 		return "%s [Lvl %d], HP: %d, Mana: %d" % (self.name, self.level, self.HP, self.mana)
