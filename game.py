@@ -6,6 +6,7 @@ from threading import Thread
 from player import *
 from battle import *
 from weapon import *
+from shop import *
 
 HOST = ""
 PORT = 6425
@@ -26,7 +27,18 @@ print("Server now listening")
 player_list = {}
 battle = False
 battle_start = None
+comandL = [Battle(player_list)]
+#################################################################
 
+def menu():
+	global comandL
+	
+
+
+
+
+
+#################################################################
 def new_player(c):
 	try:
 		u.s2c(c, "Welcome to Outlandland!")
