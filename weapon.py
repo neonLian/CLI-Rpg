@@ -22,10 +22,14 @@ class Weapon():
 		for effect in self.effects:
 			if not effect in player.effects:
 				player.effects.append(effect)
+	def desc(self):
+		return "%s deals %d damage to a player for %d mana." % (self.name, self.damage, self.mana_cost)
 
 class AngryPiranha(Weapon):
 	def __init__(self, player):
 		Weapon.__init__(self, player, "Angry Piranha", dmg=60, effects=["bleeding"])
+	def desc(self):
+		return Weapon.desc()  
 
 class AntiFireExtinguisher(Weapon):
 	def __init__(self, player):
@@ -33,7 +37,7 @@ class AntiFireExtinguisher(Weapon):
 
 class EdibleRainbow(Weapon):
 	def __init__(self, player):
-		Weapon.__init__(self, player, "Edible Rainbow", dmg=-30, mana=30)
+		Weapon.__init__(self, player, "Edible Rainbow", dmg=-60, mana=30)
 	
 	def special(self, player):
 		self.player.effects = []
@@ -47,7 +51,7 @@ class Manapua(Weapon):
 
 class Matchmaker(Weapon):
 	def __init__(self, player):
-		Weapon.__init__(self,player,"Matchmaker",dmg=85, mana=10, effects=["burning"])
+		Weapon.__init__(self,player,"Matchmaker",dmg=75, mana=25, effects=["burning"])
 
 class axe(Weapon):
 	def __init__(self, player):
@@ -70,10 +74,15 @@ class spear(Weapon):
 class Bow(Weapon):
 	def __init__(self, player):
 		Weapon.__init__(self,player,"Bow",dmg=50)
+
+	def special(self, player):
+		player.mana -= 10
+		self.player.mana += 10
+
 class Zap(Weapon):
 	def __init__(self, player):
 		Weapon.__init__(self, player, "Zap", dmg=25)
 	
 	def special(self, player):
-		player.mana -= 20
-weapon_list = [AngryPiranha, AntiFireExtinguisher, Matchmaker, axe, club, spear, Bow]
+		player.mana -= 30
+weapon_list = [AngryPiranha, AntiFireExtinguisher, Matchmaker, axe, club, spear, Bow, Zap]
