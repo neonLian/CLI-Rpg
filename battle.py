@@ -22,7 +22,9 @@ class Battle:
 	def attack(self, player):
 		u.s2c(player.conn, "\nWhat weapon would you like to use? ")
 		wpn_list = dict(player.weapons)
-		for wep in wpn_list:
+		print(wpn_list)
+		print(player.weapons)
+		for wep in player.weapons:
 			new_name = wep + " (" + str(wpn_list[wep].mana_cost) + " mana)"
 			wpn_list[new_name] = wpn_list.pop(wep) 
 		weapon = u.menu_option(wpn_list, player.conn)
@@ -39,7 +41,7 @@ class Battle:
 			for i, t in enumerate(targets):
 				if player.name == t.name:
 					targets.pop(i)
-			target = u.menu_option(self.players, player.conn)
+			target = u.menu_option(targets, player.conn)
 		target_player = target
 		target = target_player.name
 		if target_player in self.players and ((target == player.name) == weapon.buff):
