@@ -1,7 +1,6 @@
 import util as u
+from copy import deepcopy
 
-class GameError(Exception):
-	pass
 
 class Battle:
 	""" Usage: Battle([player1, player2]) """
@@ -32,8 +31,11 @@ class Battle:
 		try:
 			weapon = int(weapon)
 			weapon = list(wpn_list.values())[weapon]
-		except ValueError:
-			weapon = wpn_list[weapon]
+		except (ValueError, IndexError):
+			try:
+				weapon = player.weapons[weapon]
+			except KeyError:
+				raise u.GameError("Invalid weapon.")
 		if weapon.buff:
 			target = player
 		else:
@@ -43,32 +45,41 @@ class Battle:
 				if player.name == t.name:
 					targets.pop(i)
 			target = u.menu_option(targets, player.conn)
-		target_player = target
-		target = target_player.name
-		if target_player in self.players and ((target == player.name) == weapon.buff):
-			self.bc(player.name + " attacked " + target + " with " + weapon.name)
-			weapon.attack(target_player)
-		else:
-			u.s2c(player.conn, "Invalid player.")
+			for p in self.players:
+				if p.name == target:
+					target = p
+		try:
+			target_player = target
+			target = target_player.name
+			if target_player in self.players and ((target == player.name) == weapon.buff):
+				self.bc(player.name + " attacked " + target + " with " + weapon.name)
+				weapon.attack(target_player)
+		except AttributeError:
+			raise u.GameError("Invalid player.")
 	
 	def turn(self, player):
-		self.bc("\n-- %s's Turn --" % player.name)
-		player.do_effects()
-		if player.HP > 0:
-			self.inform()
-			self.attack(player)
-	
+		player_stats = {"hp": player.HP, "mana": player.mana}
+		try:
+			player.do_effects()
+			if player.HP > 0:
+				self.inform()
+				self.attack(player)
+			for i, p in enumerate(self.players):
+				if p.HP <= 0:
+					self.bc(p.name + " has died.")
+					self.players.pop(i)
+		except u.GameError as e:
+			u.s2c(player.conn, str(e))
+			player.HP, player.mana = (player_stats["hp"], player_stats["mana"])
+			self.turn(player)
 	def start(self):
 		player_index = 0
 		while len(self.players) > 1:
 			next_p = self.players[player_index]
 			try:
+				self.bc("\n-- %s's Turn --" % next_p.name)
 				self.turn(next_p)
-				for i, p in enumerate(self.players):
-					if p.HP <= 0:
-						self.bc(p.name + " has died.")
-						self.players.pop(i)
-			except:
+			except (BrokenPipeError, OSError):
 				name = next_p.name
 				next_p.conn.close()
 				del next_p
