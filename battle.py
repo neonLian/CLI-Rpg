@@ -36,6 +36,8 @@ class Battle:
 				weapon = player.weapons[weapon]
 			except KeyError:
 				raise u.GameError("Invalid weapon.")
+		if weapon.mana_cost > player.mana:
+			raise u.GameError("You need %d mana to use this weapon." % weapon.mana_cost)
 		if weapon.buff:
 			target = player
 		else:
@@ -62,7 +64,6 @@ class Battle:
 		try:
 			player.do_effects()
 			if player.HP > 0:
-				self.inform()
 				self.attack(player)
 			for i, p in enumerate(self.players):
 				if p.HP <= 0:
@@ -78,6 +79,7 @@ class Battle:
 			next_p = self.players[player_index]
 			try:
 				self.bc("\n-- %s's Turn --" % next_p.name)
+				self.inform()
 				self.turn(next_p)
 			except (BrokenPipeError, OSError):
 				name = next_p.name
