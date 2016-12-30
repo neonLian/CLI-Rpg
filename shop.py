@@ -4,17 +4,29 @@ stockL = ['sword','bow','axe','staff']
 
 
 class Shop():
-	def __init__(self,money,stock,c,money_type):
+	def __init__(self,money,stock,c,money_type,player_weapons):
 		self.Player_money = money
 		self.shop_money = 300
 		self.stock = stock
 		self.conn = c
 		self.m_type = money_type
-	def intro(self):
-		print('Hello, wellcome to the shop.')
+		self.player_weapons = player_weapons
 	def shop_state(self):
 		u.s2c(self.conn,'we have %s %s' % (self.shop_money,self.m_type))
 		u.s2c(self.conn,'we also have the folowing in stock')
 		for x in self.stock:
 			u.s2c(self.conn,x.name)
+	def buy(self):
+		u.s2c(self.conn,' what WOULD you like!?(input a number)')
+		num = 0
+		for x in self.stock:
+			num += 1
+			u.s2c(self.conn,'%s . %s this cost %s' % (str(num),x.name,str(x.price)))
+		pick = u.rfc(self.conn)
+		int(pick)
+		player.append(stock[pick])
+		player.money -= stock[pick].price
+		
+
+		
 
