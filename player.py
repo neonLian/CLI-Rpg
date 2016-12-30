@@ -5,6 +5,7 @@ class Player():
 		self.HP = 400
 		self.name = name
 		self.conn = conn
+		self.password = ""
 		self.cause = cause
 		self.currency = money
 		self.money = 0

@@ -30,20 +30,23 @@ player_list = {}
 battle = False
 battle_start = None
 time_left = 10
-#########################
+
+def new_shop(player):	
+	Shop1 = Shop(player.money,weapon_list,player.conn,player.currency)
+	u.s2c(player.conn,'HELLO!Welcome to my SHOP!what can i DO for you!')
+	Shop1.shop_state()
+
+option_list = {"shop": new_shop, "battle": None}
 
 def menu(player):
-	u.s2c(player.conn,"what would you like to do,// 1. shop")
-	action = u.rfc(player.conn)
-	if action == '1':
-		Shop1 = Shop(player.money,weapon_list,player.conn,player.currency)
-		u.s2c(player.conn,'HELLO!Welcome to my SHOP!what can i DO for you!')
-		Shop1.shop_state()
-
-
-
-
-
+	u.s2c(player.conn,"What would you like to do?")
+	option = u.menu_option(option_list.keys(), player.conn)
+	try:
+		option = int(option)
+		option = list(option_list.keys())[option]
+	except ValueError:
+		pass
+	option_list[option](player)
 
 ########################
 # save the players in a seperate dictionary and start a battle
