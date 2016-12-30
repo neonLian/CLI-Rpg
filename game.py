@@ -3,6 +3,7 @@ import time
 import util as u
 import cause
 from threading import Thread
+import save
 from player import *
 from battle import *
 from weapon import *
@@ -65,8 +66,13 @@ def new_player(c):
 		u.s2c(c, "What is your name?")
 		# ask for player's name
 		name = u.rfc(c)
-		# create new player
-		player = Player(c, r.choice(cause.Clist), r.choice(cause.Money), name)
+		try:
+			player = save.recv_player(name, c)
+			u.s2c(c, "Player loaded!")
+			print("Player loaded")
+		except FileNotFoundError:
+			# create new player
+			player = Player(c, r.choice(cause.Clist), r.choice(cause.Money), name)
 		u.s2c(c, "%s, your cause for fighting everyone is because %s" % (player.name, player.cause.lower()))
 		u.s2c(c, "On your journeys, you will pay with %s." % (player.currency))
 		u.s2c(c, "You will enter a battle when enough players are online!")
@@ -74,12 +80,12 @@ def new_player(c):
 		# add player to the player list
 		player_list[player.name] = player
 		# give player a few weapons and spells
-		player.add_weapon(r.choice(weapon_list)(player))
-		player.add_weapon(Manapua(player))
-		player.add_weapon(EdibleRainbow(player))
+		player.add_weapon(r.choice(weapon_list).name)
+		player.add_weapon("Manapua")
+		player.add_weapon("Edible Rainbow")
 		# begin notifying player when new people are online
 		last_players = dict(player_list)
-		menu(player)
+		# menu(player)
 		while True:
 			# check for new player
 			if not player_list == last_players:
