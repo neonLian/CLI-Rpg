@@ -41,8 +41,8 @@ class AntiFireExtinguisher(Weapon):
 		Weapon.__init__(self, player, dmg=100, mana=40, effects=["burning"],price = 210)
 
 class EdibleRainbow(Weapon):
+	name = 'Edible Rainbow'
 	price = 50
-	name = ' EdibleRainbow'
 	def __init__(self, player):
 		Weapon.__init__(self, player, dmg=-60, mana=30,price = 50)
 	
@@ -50,7 +50,7 @@ class EdibleRainbow(Weapon):
 		self.player.effects = []
 
 class Manapua(Weapon):
-	name = 'Manapua '
+	name = 'Manapua'
 	price = 40
 	def __init__(self, player):
 		Weapon.__init__(self, player, dmg=0,price = 40)
@@ -59,14 +59,14 @@ class Manapua(Weapon):
 		player.mana += 50
 
 class Matchmaker(Weapon):
+	name = 'Matchmaker'
 	price = 190
-	name = 'Matchmaker '
 	def __init__(self, player):
 		Weapon.__init__(self,player,dmg=75, mana=25, effects=["burning"],price = 190)
 
 class axe(Weapon):
+	name = "Executioner's Axe"
 	price = 150
-	name = 'axe'
 	def __init__(self, player):
 		Weapon.__init__(self,player,dmg=40,price = 150)
 	
@@ -76,21 +76,21 @@ class axe(Weapon):
 		else:
 			player.HP -= self.damage
 class club(Weapon):
+	name = "Club"
 	price = 60
-	name = 'club '
 	def __init__(self, player):
 		Weapon.__init__(self,player,dmg=65,price = 60)
 
 class spear(Weapon):
+	name = "Spear"
 	price = 80
-	name = 'spear '
 	def __init__(self, player):
 		Weapon.__init__(self,player,dmg=70,price = 80)
 
 # i was thinking you could load the bow with arows that have efects thats why the dmg is so low
 class Bow(Weapon):
+	name = "Bow"
 	price = 70
-	name = 'bow '
 	def __init__(self, player):
 		Weapon.__init__(self,player,dmg=50,price = 70)
 
@@ -99,8 +99,8 @@ class Bow(Weapon):
 		self.player.mana += 10
 
 class Zap(Weapon):
+	name = "Zap"
 	price = 75
-	name = 'zap '
 	def __init__(self, player):
 		Weapon.__init__(self, player, dmg=25,price = 75)
 	
