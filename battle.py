@@ -1,5 +1,6 @@
 import util as u
 import random as r
+from weapon import *
 
 class Battle:
 	""" Usage: Battle([player1, player2]) """
@@ -61,6 +62,8 @@ class Battle:
 			raise u.GameError("Invalid player.")
 	
 	def turn(self, player):
+		if player.mana < 0:
+			player.mana = 0
 		player_stats = {"hp": player.HP, "mana": player.mana}
 		try:
 			player.do_effects()
@@ -94,15 +97,20 @@ class Battle:
 		self.giveloot(winner)
 
 	def giveloot(self, player):
-		new_wep = r.choice(weapon_list)
+		new_wep = r.choice(weapon_list)(player)
 		give = True
 		money_earned = r.randint(50, 70)
 		for w in player.weapons.values():
 			if type(w) == new_wep:
+				money_earned += 100
 				give = False
 				break
 		u.s2c(player.conn, "You earned %d %s!" % (money_earned, player.currency))
 		if give:
-			player.add_weapon
+			player.add_weapon(new_wep)
+			u.s2c(player.conn, "You earned a %s!" % new_wep.name)
+		xp = r.randint(25, 50)
+		player.xp += xp
+		u.s2c(player.conn, "You earned %d more experience!" % xp)
 
 
