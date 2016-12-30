@@ -1,3 +1,6 @@
+class GameError(Exception):
+	pass
+
 def s2c(conn, text):
 	conn.send((text + "\n").encode("utf-8"))
 

@@ -1,9 +1,12 @@
 import util as u
+import random as r
 
 class Battle:
 	""" Usage: Battle([player1, player2]) """
 	def __init__(self, players):
 		self.players = players
+		for player in players:
+			player.reset()
 		self.playernames = []
 		for player in self.players:
 			self.playernames.append(player.name)
@@ -22,15 +25,20 @@ class Battle:
 	def attack(self, player):
 		u.s2c(player.conn, "\nWhat weapon would you like to use? ")
 		wpn_list = dict(player.weapons)
-		for wep in wpn_list:
+		for wep in player.weapons:
 			new_name = wep + " (" + str(wpn_list[wep].mana_cost) + " mana)"
 			wpn_list[new_name] = wpn_list.pop(wep) 
 		weapon = u.menu_option(wpn_list, player.conn)
 		try:
 			weapon = int(weapon)
 			weapon = list(wpn_list.values())[weapon]
-		except ValueError:
-			weapon = wpn_list[weapon]
+		except (ValueError, IndexError):
+			try:
+				weapon = player.weapons[weapon]
+			except KeyError:
+				raise u.GameError("Invalid weapon.")
+		if weapon.mana_cost > player.mana:
+			raise u.GameError("You need %d mana to use this weapon." % weapon.mana_cost)
 		if weapon.buff:
 			target = player
 		else:
@@ -39,36 +47,62 @@ class Battle:
 			for i, t in enumerate(targets):
 				if player.name == t.name:
 					targets.pop(i)
-			target = u.menu_option(self.players, player.conn)
-		target_player = target
-		target = target_player.name
-		if target_player in self.players and ((target == player.name) == weapon.buff):
-			self.bc(player.name + " attacked " + target + " with " + weapon.name)
-			weapon.attack(target_player)
-		else:
-			u.s2c(player.conn, "Invalid player.")
+			target = u.menu_option(targets, player.conn)
+			for p in self.players:
+				if p.name == target:
+					target = p
+		try:
+			target_player = target
+			target = target_player.name
+			if target_player in self.players and ((target == player.name) == weapon.buff):
+				self.bc(player.name + " attacked " + target + " with " + weapon.name)
+				weapon.attack(target_player)
+		except AttributeError:
+			raise u.GameError("Invalid player.")
 	
 	def turn(self, player):
-		self.bc("\n-- %s's Turn --" % player.name)
-		player.do_effects()
-		if player.HP > 0:
-			self.inform()
-			self.attack(player)
-	
-	def start(self):
-		player_index = 0
-		while len(self.players) > 1:
-			next_p = self.players[player_index]
-			self.turn(next_p)
+		player_stats = {"hp": player.HP, "mana": player.mana}
+		try:
+			player.do_effects()
+			if player.HP > 0:
+				self.attack(player)
 			for i, p in enumerate(self.players):
 				if p.HP <= 0:
 					self.bc(p.name + " has died.")
 					self.players.pop(i)
+		except u.GameError as e:
+			u.s2c(player.conn, str(e))
+			player.HP, player.mana = (player_stats["hp"], player_stats["mana"])
+			self.turn(player)
+	def start(self):
+		player_index = 0
+		while len(self.players) > 1:
+			next_p = self.players[player_index]
+			try:
+				self.bc("\n-- %s's Turn --" % next_p.name)
+				self.inform()
+				self.turn(next_p)
+			except (BrokenPipeError, OSError):
+				name = next_p.name
+				next_p.conn.close()
+				del next_p
 			player_index += 1
 			if player_index > len(self.players) - 1:
 				player_index = 0
 		winner = self.players[0]
 		u.s2c(winner.conn, "You have won the match!")
-		
+		self.giveloot(winner)
+
+	def giveloot(self, player):
+		new_wep = r.choice(weapon_list)
+		give = True
+		money_earned = r.randint(50, 70)
+		for w in player.weapons.values():
+			if type(w) == new_wep:
+				give = False
+				break
+		u.s2c(player.conn, "You earned %d %s!" % (money_earned, player.currency))
+		if give:
+			player.add_weapon
 
 
