@@ -27,12 +27,11 @@ print("Server now listening")
 player_list = {}
 battle = False
 battle_start = None
-comandL = [Battle(player_list)]
+
 #################################################################
 
-def menu():
-	global comandL
-	
+
+##################################################################
 
 
 

@@ -18,5 +18,4 @@ class Shop():
 
 Player1 = Player(0,"",'pocket lint','john')			
 shop1 = Shop(Player1.money,stockL)		
-shop1.intro()
-shop1.shop_state()
+
