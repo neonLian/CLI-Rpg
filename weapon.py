@@ -27,7 +27,8 @@ class Weapon():
 		return "%s deals %d damage to a player for %d mana." % (self.name, self.damage, self.mana_cost)
 
 class AngryPiranha(Weapon):
-	name = "Angry Piranha"
+	name = "Angry Piranha "
+	price = 180
 	def __init__(self, player):
 		Weapon.__init__(self, player, dmg=60, effects=["bleeding"],price = 180)
 	def desc(self):
@@ -35,10 +36,12 @@ class AngryPiranha(Weapon):
 
 class AntiFireExtinguisher(Weapon):
 	name = 'Anti-Fire Extinguisher'
+	price = 210
 	def __init__(self, player):
 		Weapon.__init__(self, player, dmg=100, mana=40, effects=["burning"],price = 210)
 
 class EdibleRainbow(Weapon):
+	price = 50
 	name = ' EdibleRainbow'
 	def __init__(self, player):
 		Weapon.__init__(self, player, dmg=-60, mana=30,price = 50)
@@ -48,6 +51,7 @@ class EdibleRainbow(Weapon):
 
 class Manapua(Weapon):
 	name = 'Manapua '
+	price = 40
 	def __init__(self, player):
 		Weapon.__init__(self, player, dmg=0,price = 40)
 	
@@ -55,11 +59,13 @@ class Manapua(Weapon):
 		player.mana += 50
 
 class Matchmaker(Weapon):
+	price = 190
 	name = 'Matchmaker '
 	def __init__(self, player):
 		Weapon.__init__(self,player,dmg=75, mana=25, effects=["burning"],price = 190)
 
 class axe(Weapon):
+	price = 150
 	name = 'axe'
 	def __init__(self, player):
 		Weapon.__init__(self,player,dmg=40,price = 150)
@@ -70,18 +76,20 @@ class axe(Weapon):
 		else:
 			player.HP -= self.damage
 class club(Weapon):
+	price = 60
 	name = 'club '
 	def __init__(self, player):
 		Weapon.__init__(self,player,dmg=65,price = 60)
 
 class spear(Weapon):
+	price = 80
 	name = 'spear '
 	def __init__(self, player):
 		Weapon.__init__(self,player,dmg=70,price = 80)
 
 # i was thinking you could load the bow with arows that have efects thats why the dmg is so low
 class Bow(Weapon):
-	
+	price = 70
 	name = 'bow '
 	def __init__(self, player):
 		Weapon.__init__(self,player,dmg=50,price = 70)
@@ -91,6 +99,7 @@ class Bow(Weapon):
 		self.player.mana += 10
 
 class Zap(Weapon):
+	price = 75
 	name = 'zap '
 	def __init__(self, player):
 		Weapon.__init__(self, player, dmg=25,price = 75)
