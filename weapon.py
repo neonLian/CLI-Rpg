@@ -27,22 +27,19 @@ class Weapon():
 		return "%s deals %d damage to a player for %d mana." % (self.name, self.damage, self.mana_cost)
 
 class AngryPiranha(Weapon):
-	name = "Angry Piranha "
-	price = 180
+	name = "Angry Piranha"
 	def __init__(self, player):
 		Weapon.__init__(self, player, dmg=60, effects=["bleeding"],price = 180)
 	def desc(self):
 		return Weapon.desc()  
 
 class AntiFireExtinguisher(Weapon):
-	name = 'Anti-Fire Extinguisher'
-	price = 210
+	name = "Anti-Fire Extinguisher"
 	def __init__(self, player):
 		Weapon.__init__(self, player, dmg=100, mana=40, effects=["burning"],price = 210)
 
 class EdibleRainbow(Weapon):
-	name = 'Edible Rainbow'
-	price = 50
+	name = "Edible Rainbow"
 	def __init__(self, player):
 		Weapon.__init__(self, player, dmg=-60, mana=30,price = 50)
 	
@@ -50,8 +47,7 @@ class EdibleRainbow(Weapon):
 		self.player.effects = []
 
 class Manapua(Weapon):
-	name = 'Manapua'
-	price = 40
+	name = "Manapua"
 	def __init__(self, player):
 		Weapon.__init__(self, player, dmg=0,price = 40)
 	
@@ -59,14 +55,12 @@ class Manapua(Weapon):
 		player.mana += 50
 
 class Matchmaker(Weapon):
-	name = 'Matchmaker'
-	price = 190
+	name = "Matchmaker"
 	def __init__(self, player):
 		Weapon.__init__(self,player,dmg=75, mana=25, effects=["burning"],price = 190)
 
 class axe(Weapon):
 	name = "Executioner's Axe"
-	price = 150
 	def __init__(self, player):
 		Weapon.__init__(self,player,dmg=40,price = 150)
 	
@@ -77,20 +71,18 @@ class axe(Weapon):
 			player.HP -= self.damage
 class club(Weapon):
 	name = "Club"
-	price = 60
 	def __init__(self, player):
 		Weapon.__init__(self,player,dmg=65,price = 60)
 
 class spear(Weapon):
 	name = "Spear"
-	price = 80
 	def __init__(self, player):
 		Weapon.__init__(self,player,dmg=70,price = 80)
 
 # i was thinking you could load the bow with arows that have efects thats why the dmg is so low
 class Bow(Weapon):
+	
 	name = "Bow"
-	price = 70
 	def __init__(self, player):
 		Weapon.__init__(self,player,dmg=50,price = 70)
 
@@ -100,10 +92,9 @@ class Bow(Weapon):
 
 class Zap(Weapon):
 	name = "Zap"
-	price = 75
 	def __init__(self, player):
 		Weapon.__init__(self, player, dmg=25,price = 75)
 	
 	def special(self, player):
 		player.mana -= 30
-weapon_list = [AngryPiranha, AntiFireExtinguisher, Matchmaker, axe, club, spear, Bow, Zap]
+weapon_list = [AngryPiranha, AntiFireExtinguisher, Matchmaker, axe, club, spear, Bow, Zap, Manapua, EdibleRainbow]
