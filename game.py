@@ -61,6 +61,7 @@ def new_player(c):
 		# begin notifying player when new people are online
 		last_players = dict(player_list)
 		while True:
+			# check for new player
 			if not player_list == last_players:
 				new_player = dict(player_list)
 				for known_player in last_players:

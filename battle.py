@@ -1,11 +1,12 @@
 import util as u
-from copy import deepcopy
-
+import random as r
 
 class Battle:
 	""" Usage: Battle([player1, player2]) """
 	def __init__(self, players):
 		self.players = players
+		for player in players:
+			player.reset()
 		self.playernames = []
 		for player in self.players:
 			self.playernames.append(player.name)
@@ -90,6 +91,18 @@ class Battle:
 				player_index = 0
 		winner = self.players[0]
 		u.s2c(winner.conn, "You have won the match!")
-		
+		self.giveloot(winner)
+
+	def giveloot(self, player):
+		new_wep = r.choice(weapon_list)
+		give = True
+		money_earned = r.randint(50, 70)
+		for w in player.weapons.values():
+			if type(w) == new_wep:
+				give = False
+				break
+		u.s2c(player.conn, "You earned %d %s!" % (money_earned, player.currency))
+		if give:
+			player.add_weapon
 
 

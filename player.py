@@ -15,6 +15,11 @@ class Player():
 		self.effects = []
 		self.xp = 0
 
+	def reset(self):
+		self.HP = 400 * self.multiplier
+		self.effects = []
+		self.mana = 50
+
 	def do_effects(self):
 		self.mana += 5
 		# Burning
