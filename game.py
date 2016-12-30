@@ -30,8 +30,22 @@ player_list = {}
 battle = False
 battle_start = None
 time_left = 10
+#########################
+
+def menu(player):
+	u.s2c(player.conn,"what would you like to do,// 1. shop")
+	action = u.rfc(player.conn)
+	if action == '1':
+		Shop1 = Shop(player.money,weapon_list,player.conn,player.currency)
+		u.s2c(player.conn,'HELLO!Welcome to my SHOP!what can i DO for you!')
+		Shop1.shop_state()
 
 
+
+
+
+
+########################
 # save the players in a seperate dictionary and start a battle
 def start_battle():
 	global player_list
@@ -62,6 +76,7 @@ def new_player(c):
 		player.add_weapon(EdibleRainbow(player))
 		# begin notifying player when new people are online
 		last_players = dict(player_list)
+		menu(player)
 		while True:
 			# check for new player
 			if not player_list == last_players:

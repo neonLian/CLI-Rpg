@@ -1,13 +1,14 @@
 import random as r
 import util as u
 class Weapon():
-	def __init__(self, player, name, dmg, mana=0, effects=[]):
+	def __init__(self, player, name, dmg, mana=0, effects=[],price = 0):
 		self.name = name
 		self.damage = dmg
 		self.mana_cost = mana
 		self.effects = effects
 		self.buff = dmg <= 0
 		self.player = player
+		self.price = price
 	
 	def special(self, player):
 		pass
@@ -26,36 +27,42 @@ class Weapon():
 		return "%s deals %d damage to a player for %d mana." % (self.name, self.damage, self.mana_cost)
 
 class AngryPiranha(Weapon):
+	name = "Angry Piranha"
 	def __init__(self, player):
-		Weapon.__init__(self, player, "Angry Piranha", dmg=60, effects=["bleeding"])
+		Weapon.__init__(self, player, "Angry Piranha", dmg=60, effects=["bleeding"],price = 180)
 	def desc(self):
 		return Weapon.desc()  
 
 class AntiFireExtinguisher(Weapon):
+	name = 'AntiFireExtinguisher'
 	def __init__(self, player):
-		Weapon.__init__(self, player, "Anti-Fire Extinguisher", dmg=100, mana=40, effects=["burning"])
+		Weapon.__init__(self, player, "Anti-Fire Extinguisher", dmg=100, mana=40, effects=["burning"],price = 210)
 
 class EdibleRainbow(Weapon):
+	name = ' EdibleRainbow'
 	def __init__(self, player):
-		Weapon.__init__(self, player, "Edible Rainbow", dmg=-60, mana=30)
+		Weapon.__init__(self, player, "Edible Rainbow", dmg=-60, mana=30,price = 50)
 	
 	def special(self, player):
 		self.player.effects = []
 
 class Manapua(Weapon):
+	name = 'Manapua '
 	def __init__(self, player):
-		Weapon.__init__(self, player, "Manapua", dmg=0)
+		Weapon.__init__(self, player, "Manapua", dmg=0,price = 40)
 	
 	def special(self, player):
 		player.mana += 50
 
 class Matchmaker(Weapon):
+	name = 'Matchmaker '
 	def __init__(self, player):
-		Weapon.__init__(self,player,"Matchmaker",dmg=75, mana=25, effects=["burning"])
+		Weapon.__init__(self,player,"Matchmaker",dmg=75, mana=25, effects=["burning"],price = 190)
 
 class axe(Weapon):
+	name = 'axe'
 	def __init__(self, player):
-		Weapon.__init__(self,player,"Executioner's Axe",dmg=40)
+		Weapon.__init__(self,player,"Executioner's Axe",dmg=40,price = 150)
 	
 	def attack(self, player):
 		if self.damage * 4 >= player.HP:
@@ -63,25 +70,30 @@ class axe(Weapon):
 		else:
 			player.HP -= self.damage
 class club(Weapon):
+	name = 'club '
 	def __init__(self, player):
-		Weapon.__init__(self,player,"Club",dmg=65)
+		Weapon.__init__(self,player,"Club",dmg=65,price = 60)
 
 class spear(Weapon):
+	name = 'spear '
 	def __init__(self, player):
-		Weapon.__init__(self,player,"Spear",dmg=70)
+		Weapon.__init__(self,player,"Spear",dmg=70,price = 80)
 
 # i was thinking you could load the bow with arows that have efects thats why the dmg is so low
 class Bow(Weapon):
+	
+	name = 'bow '
 	def __init__(self, player):
-		Weapon.__init__(self,player,"Bow",dmg=50)
+		Weapon.__init__(self,player,"Bow",dmg=50,price = 70)
 
 	def special(self, player):
 		player.mana -= 10
 		self.player.mana += 10
 
 class Zap(Weapon):
+	name = 'zap '
 	def __init__(self, player):
-		Weapon.__init__(self, player, "Zap", dmg=25)
+		Weapon.__init__(self, player, "Zap", dmg=25,price = 75)
 	
 	def special(self, player):
 		player.mana -= 30
