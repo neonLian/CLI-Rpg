@@ -1,10 +1,13 @@
 import random as r
 import util as u
+from weapon import Weapon, weapon_list
+
 class Player():
 	def __init__(self, conn, cause, money, name="Player"):
 		self.HP = 400
 		self.name = name
 		self.conn = conn
+		self.password = ""
 		self.cause = cause
 		self.currency = money
 		self.money = 0
@@ -31,7 +34,12 @@ class Player():
 			self.HP -= r.randint(15, 30)
 
 	def add_weapon(self, weapon):
-		self.weapons[weapon.name] = weapon
+		if type(weapon) == Weapon:
+			self.weapons[weapon.name] = weapon
+		elif type(weapon) == str:
+			for w in weapon_list:
+				if w.name == weapon:
+					self.add_weapon(w(self))
 	
 	def level_up(self):
 		self.level += 1
