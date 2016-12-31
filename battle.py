@@ -1,4 +1,5 @@
 import util as u
+import save
 import random as r
 from weapon import *
 
@@ -73,6 +74,11 @@ class Battle:
 				if p.HP <= 0:
 					self.bc(p.name + " has died.")
 					self.players.pop(i)
+					for p in self.players:
+						p.money += 20
+						p.xp += 20
+						u.s2c(p.conn, "You earned 20 %s and 20 xp!" % p.currency)
+						save.save_player(p)
 		except u.GameError as e:
 			u.s2c(player.conn, str(e))
 			player.HP, player.mana = (player_stats["hp"], player_stats["mana"])

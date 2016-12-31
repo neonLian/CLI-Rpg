@@ -73,16 +73,17 @@ def new_player(c):
 		except FileNotFoundError:
 			# create new player
 			player = Player(c, r.choice(cause.Clist), r.choice(cause.Money), name)
+			# give player a few weapons and spells
+			player.add_weapon(r.choice(weapon_list).name)
+			player.add_weapon("Manapua")
+			player.add_weapon("Edible Rainbow")
+			save.save_player(player)
 		u.s2c(c, "%s, your cause for fighting everyone is because %s" % (player.name, player.cause.lower()))
 		u.s2c(c, "On your journeys, you will pay with %s." % (player.currency))
 		u.s2c(c, "You will enter a battle when enough players are online!")
 		u.s2c(c, "There are %d other players online." % len(player_list))
 		# add player to the player list
 		player_list[player.name] = player
-		# give player a few weapons and spells
-		player.add_weapon(r.choice(weapon_list).name)
-		player.add_weapon("Manapua")
-		player.add_weapon("Edible Rainbow")
 		# begin notifying player when new people are online
 		last_players = dict(player_list)
 		# menu(player)
