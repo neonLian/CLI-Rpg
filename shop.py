@@ -14,20 +14,26 @@ class Shop():
 		self.player = player
 	def shop_state(self):
 		u.s2c(self.conn,'we have %s %s' % (self.shop_money,self.m_type))
-		u.s2c(self.conn,'we also have the folowing in stock')
+		u.s2c(self.conn,'we also have the folowing IN stock')
 		for x in self.stock:
 			u.s2c(self.conn,x.name)
 	def buy(self):
 		u.s2c(self.conn,' what WOULD you like!?(input a number)')
-		num = 0
+		num = -1
 		for x in self.stock:
 			num += 1
-			u.s2c(self.conn,'%s . %s this cost %s' % (str(num),x.name,str(x.price)))
+			u.s2c(self.conn,'%s . %s this costs %s %s' % (str(num),x.name,str(x.price),self.m_type))
 		pick = u.rfc(self.conn)
-		int(pick)
-		player.add_weapon(stock[pick]).name
-		player.money -= stock[pick].price
-		
-
-		
+		pick = int(pick)
+		self.temp_wep = self.stock[pick].name
+		self.Player_money -= self.stock[pick].price
+		u.s2c(self.conn,'you have %s %s.' % (str(self.Player_money),self.m_type))
+	def sell(self):
+		u.s2c(self.conn,'what would YOU like to sell!?')
+		num = 0
+		for x in self.player_weapons:
+			u.s2c(self.conn,'you CAN sell %s for %s %s' % (x.name,str(x.price),self.m_type)
+		pick = u.rfc(self.conn)
+		pick = int(pick)
+		self.player_weapons.pop(pick)
 
