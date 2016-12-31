@@ -15,6 +15,7 @@ class Player():
 		self.weapons = {}
 		self.level = 1
 		self.multiplier = 1.0
+		self.kills = 0
 		self.effects = []
 		self.xp = 0
 

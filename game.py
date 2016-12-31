@@ -94,12 +94,11 @@ def new_player(c):
 		player.add_weapon("Edible Rainbow")
 		# begin notifying player when new people are online
 		last_players = dict(player_list)
-<<<<<<< HEAD
 		Thread(target=menu, args=(player,)).start()
-=======
-		menu(player)
->>>>>>> 62bfab8d847484a60516bf7ccdde76c4b8d63580
 		while True:
+			if player.xp > 100 * player.multiplier:
+				player.xp -= player.multiplier * 100
+				player.level_up()
 			# check for new player
 			if not player_list == last_players:
 				new_player = dict(player_list)
