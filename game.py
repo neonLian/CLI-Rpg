@@ -40,6 +40,10 @@ def new_shop(player):
 	Shop1.buy()
 	player.add_weapon(Shop1.temp_wep)
 	print(player.weapons)
+	Shop1.sell()
+	print(player.weapons)
+	player.weapons = Shop1.player_weapons
+	print(player.weapons)
 
 
 option_list = {"shop": new_shop, "battle": None}

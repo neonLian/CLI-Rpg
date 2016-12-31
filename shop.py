@@ -12,6 +12,7 @@ class Shop():
 		self.m_type = money_type
 		self.player_weapons = player_weapons
 		self.player = player
+		print(type(self.player_weapons))
 	def shop_state(self):
 		u.s2c(self.conn,'we have %s %s' % (self.shop_money,self.m_type))
 		u.s2c(self.conn,'we also have the folowing IN stock')
@@ -31,9 +32,11 @@ class Shop():
 	def sell(self):
 		u.s2c(self.conn,'what would YOU like to sell!?')
 		num = 0
-		for x in self.player_weapons:
-			u.s2c(self.conn,'you CAN sell %s for %s %s' % (x.name,str(x.price),self.m_type)
+		for x in self.player_weapons.values():
+			u.s2c(self.conn,'%s. you CAN sell %s for %s %s' % (str(num),x.name, str(x.price),self.m_type))
+			num += 1
 		pick = u.rfc(self.conn)
 		pick = int(pick)
-		self.player_weapons.pop(pick)
-
+		self.Player_money += list(self.player_weapons.values())[pick].price
+		list(self.player_weapons.values()).pop(pick)
+		u.s2c(self.conn,'you have %s %s.' % (str(self.Player_money),self.m_type))
