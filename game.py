@@ -36,7 +36,11 @@ def new_shop(player):
 	Shop1 = Shop(player.money,weapon_list,player.conn,player.currency,player.weapons,player)
 	u.s2c(player.conn,'HELLO!Welcome to my SHOP!what can i DO for you!')
 	Shop1.shop_state()
+	print(player.weapons)
 	Shop1.buy()
+	player.add_weapon(Shop1.temp_wep)
+	print(player.weapons)
+
 
 option_list = {"shop": new_shop, "battle": None}
 
@@ -86,7 +90,7 @@ def new_player(c):
 		player.add_weapon("Edible Rainbow")
 		# begin notifying player when new people are online
 		last_players = dict(player_list)
-		# menu(player)
+		menu(player)
 		while True:
 			# check for new player
 			if not player_list == last_players:
