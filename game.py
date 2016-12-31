@@ -28,6 +28,7 @@ s.listen(42)
 print("Server now listening")
 
 player_list = {}
+battle_list = []
 battle = False
 battle_start = None
 time_left = 10
@@ -46,27 +47,30 @@ def new_shop(player):
 	print(player.weapons)
 
 
-option_list = {"shop": new_shop, "battle": None}
+def ready_up(player):
+	battle_list.append(player)
+	u.s2c(player.conn, "You are ready for battle!")
+
+option_list = {"shop": new_shop, "battle": ready_up}
 
 def menu(player):
-	u.s2c(player.conn,"What would you like to do?")
-	option = u.menu_option(option_list.keys(), player.conn)
-	try:
-		option = int(option)
-		option = list(option_list.keys())[option]
-	except ValueError:
-		pass
-	option_list[option](player)
+	while not player in battle_list:
+		u.s2c(player.conn,"What would you like to do?")
+		option = u.menu_option(option_list.keys(), player.conn)
+		try:
+			option = int(option)
+			option = list(option_list.keys())[option]
+		except ValueError:
+			pass
+		option_list[option](player)
 
 ########################
 # save the players in a seperate dictionary and start a battle
 def start_battle():
-	global player_list
-	pd = dict(player_list)
-	pl = list(player_list.values())
-	player_list = {}
-	Battle(pl)
-	player_list.update(pd)
+	global battle_list
+	bl = list(battle_list)
+	battle_list = []
+	Battle(bl)
 		
 def new_player(c):
 	try:
@@ -94,7 +98,7 @@ def new_player(c):
 		player.add_weapon("Edible Rainbow")
 		# begin notifying player when new people are online
 		last_players = dict(player_list)
-		menu(player)
+		Thread(target=menu, args=(player,)).start()
 		while True:
 			# check for new player
 			if not player_list == last_players:
@@ -105,6 +109,7 @@ def new_player(c):
 				new_player = list(new_player)[0]
 				u.s2c(c, new_player + " has joined the game")
 				last_players = dict(player_list)
+
 	except BrokenPipeError:
 		# close socket and remove them from player list when they disconnect
 		for player in player_list:
@@ -125,8 +130,8 @@ def matchmaking():
 				battle_start = None
 				battle = True
 				Thread(target=start_battle).start()
-				for player in player_list:
-					players_in_battle.append(player_list.pop(player))
+				for player in battle_list:
+					players_in_battle.append(battle_list.pop(player))
 			# countdown to battle start
 			else:
 				time.sleep(1)
@@ -134,7 +139,7 @@ def matchmaking():
 					u.s2c(player.conn, "Battle starting in %d seconds!" % time_left)
 				time_left -= 1
 		# start new battle if battle_start is not none
-		elif len(player_list) >= 2:
+		elif len(battle_list) >= 2:
 			battle_start = time.time() + 10
 			time_left = 10
 
