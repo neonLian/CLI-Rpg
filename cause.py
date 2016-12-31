@@ -16,12 +16,11 @@ class Cause():
 
 class CheezPlanetCause(Cause):
 	def __init__(self, player):
-		Cause.__init__(self, player)
 		self.overall = "You must find the cheez planet, and NOBODY will stand in your way!"
 		self.tier1 = "You have to kill 3 security guards in front of NASA headquarters!"
 		self.tier2 = "Get enough experience to reach level 3 Rocket Building!"
 		self.tier3 = "Buy a rocket for 1000 %s!" % player.currency
-
+		Cause.__init__(self, player)
 
 C = Cause(random.choice(Clist),random.choice(Money))
 		
