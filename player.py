@@ -34,12 +34,9 @@ class Player():
 			self.HP -= r.randint(15, 30)
 
 	def add_weapon(self, weapon):
-		if type(weapon) == Weapon:
-			self.weapons[weapon.name] = weapon
-		elif type(weapon) == str:
-			for w in weapon_list:
-				if w.name == weapon:
-					self.add_weapon(w(self))
+		for w in weapon_list:
+			if w.name == weapon:
+				self.weapons[weapon] = w(self)
 	
 	def level_up(self):
 		self.level += 1

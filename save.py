@@ -1,4 +1,5 @@
 import os
+from player import Player
 save_directory = "./.OLLSaveFiles/"
 def save_player(player):
 	# open file
@@ -13,7 +14,7 @@ def save_player(player):
 	cause = player.cause
 	currency = player.currency
 	xp = player.xp
-	weapons = player.weapons.values()
+	weapons = list(player.weapons.keys())
 	attr_list = [name, pw, lvl, money, cause, currency, xp] + weapons
 	# write into file
 	for attr in attr_list:
@@ -25,7 +26,9 @@ def recv_player(name, conn):
 	# open file
 	savefile = open(save_directory + name + ".ollsave")
 	# transfer text into a list
-	attrs = savefile.readlines()
+	attrs = savefile.read().splitlines()
+	#for attr in attrs:
+	#	attr = attr.replace("\n", "")
 	# transfer list into variables
 	name = attrs[0]
 	pw = attrs[1]

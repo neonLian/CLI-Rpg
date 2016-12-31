@@ -34,12 +34,12 @@ class AngryPiranha(Weapon):
 		return Weapon.desc()  
 
 class AntiFireExtinguisher(Weapon):
-	name = 'Anti-Fire Extinguisher'
+	name = "Anti-Fire Extinguisher"
 	def __init__(self, player):
 		Weapon.__init__(self, player, dmg=100, mana=40, effects=["burning"],price = 210)
 
 class EdibleRainbow(Weapon):
-	name = ' EdibleRainbow'
+	name = "Edible Rainbow"
 	def __init__(self, player):
 		Weapon.__init__(self, player, dmg=-60, mana=30,price = 50)
 	
@@ -47,7 +47,7 @@ class EdibleRainbow(Weapon):
 		self.player.effects = []
 
 class Manapua(Weapon):
-	name = 'Manapua '
+	name = "Manapua"
 	def __init__(self, player):
 		Weapon.__init__(self, player, dmg=0,price = 40)
 	
@@ -55,12 +55,12 @@ class Manapua(Weapon):
 		player.mana += 50
 
 class Matchmaker(Weapon):
-	name = 'Matchmaker '
+	name = "Matchmaker"
 	def __init__(self, player):
 		Weapon.__init__(self,player,dmg=75, mana=25, effects=["burning"],price = 190)
 
 class axe(Weapon):
-	name = 'axe'
+	name = "Executioner's Axe"
 	def __init__(self, player):
 		Weapon.__init__(self,player,dmg=40,price = 150)
 	
@@ -70,19 +70,19 @@ class axe(Weapon):
 		else:
 			player.HP -= self.damage
 class club(Weapon):
-	name = 'club '
+	name = "Club"
 	def __init__(self, player):
 		Weapon.__init__(self,player,dmg=65,price = 60)
 
 class spear(Weapon):
-	name = 'spear '
+	name = "Spear"
 	def __init__(self, player):
 		Weapon.__init__(self,player,dmg=70,price = 80)
 
 # i was thinking you could load the bow with arows that have efects thats why the dmg is so low
 class Bow(Weapon):
 	
-	name = 'bow '
+	name = "Bow"
 	def __init__(self, player):
 		Weapon.__init__(self,player,dmg=50,price = 70)
 
@@ -91,10 +91,10 @@ class Bow(Weapon):
 		self.player.mana += 10
 
 class Zap(Weapon):
-	name = 'zap '
+	name = "Zap"
 	def __init__(self, player):
 		Weapon.__init__(self, player, dmg=25,price = 75)
 	
 	def special(self, player):
 		player.mana -= 30
-weapon_list = [AngryPiranha, AntiFireExtinguisher, Matchmaker, axe, club, spear, Bow, Zap]
+weapon_list = [AngryPiranha, AntiFireExtinguisher, Matchmaker, axe, club, spear, Bow, Zap, Manapua, EdibleRainbow]
