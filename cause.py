@@ -6,13 +6,18 @@ class Cause():
 	def __init__ (self, player):
 		self.player = player
 		self.currentTier = 1
-		self.overall = "overall theme"
-		self.tier1 = "kill 3 people"
-		self.tier2 = "reach level 3"
-		self.tier3 = "buy special item for 1000 money"
+		# Expected variables:
+		# self.overall = "overall theme"
+		# self.tier1 = "kill 3 people"
+		# self.tier2 = "reach level 3"
+		# self.tier3 = "buy special item for 1000 money"
+		self.tierList = [self.tier1, self.tier2, self.tier3]
 	def canProgress(self):
 		if self.player.kills >= 3 and self.currentTier = 1:
-			self.currentTier += 1
+			self.changeTier(2)
+	def changeTier(self, newTier)
+			self.tier = newTier
+			self.currentTier = self.tierList[self.tier - 1]
 
 class CheezPlanetCause(Cause):
 	def __init__(self, player):
