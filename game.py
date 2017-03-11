@@ -1,13 +1,13 @@
 import socket
 import time
 import util as u
-import cause
+# import cause
 from threading import Thread
 import save
 from player import *
 from battle import *
 from weapon import *
-from shop import *
+# from shop import *
 
 # connect a socket
 
@@ -32,7 +32,7 @@ battle_list = []
 battle = False
 battle_start = None
 time_left = 10
-
+"""
 def new_shop(player):	
 	Shop1 = Shop(player.money,weapon_list,player.conn,player.currency,player.weapons,player)
 	u.s2c(player.conn,'HELLO!Welcome to my SHOP!what can i DO for you!')
@@ -41,12 +41,12 @@ def new_shop(player):
 	Shop1.buy()
 	player.add_weapon(Shop1.temp_wep)
 	print(player.weapons)
-
+"""
 
 def ready_up(player):
 	battle_list.append(player)
 	u.s2c(player.conn, "You are ready for battle!")
-
+"""
 option_list = {"shop": new_shop, "battle": None}
 
 def menu(player):
@@ -59,7 +59,7 @@ def menu(player):
 		except ValueError:
 			pass
 		option_list[option](player)
-
+"""
 ########################
 # save the players in a seperate dictionary and start a battle
 def start_battle():
@@ -103,8 +103,7 @@ def new_player(c):
 			if not player_list == last_players:
 				new_player = dict(player_list)
 				for known_player in last_players:
-					if known_player in last_players:
-						new_player.pop(known_player)
+					new_player.pop(known_player)
 				new_player = list(new_player)[0]
 				u.s2c(c, new_player + " has joined the game")
 				last_players = dict(player_list)
